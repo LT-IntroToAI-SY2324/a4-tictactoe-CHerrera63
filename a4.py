@@ -2,7 +2,7 @@
 # talking about unimplemented class attributes, don't worry about this as you're working
 
 
-class TTTBoard:
+class TTTBoard():
     """A tic tac toe board
 
     Attributes:
@@ -10,9 +10,25 @@ class TTTBoard:
             represent moves by player 'O' and '*'s are spots no one has yet played on
     """
 
-    pass
+    def __innit__(self):
+        self.board = ["*"] * 9
 
-
+    def __str__(self) -> str:
+        s = ""
+        for x in [0, 3, 6]:
+            s += self.board[x+0] + " " + self.board[x+1] + " " + self.board[x+2] + "\n"
+        return s
+    
+    def make_move(self, player, pos) -> bool:
+        # fail if invalid move
+        if pos < 0 or pos > 8 or self.board[pos] != '*':
+            return False
+        
+        # otherwise make the move
+        self.board[pos] = player
+        return True
+    
+    
 def play_tic_tac_toe() -> None:
     """Uses your class to play TicTacToe"""
 
@@ -32,6 +48,7 @@ def play_tic_tac_toe() -> None:
             return False
 
     brd = TTTBoard()
+    # print(brd.board)
     players = ["X", "O"]
     turn = 0
 
@@ -61,6 +78,7 @@ if __name__ == "__main__":
     # need to write some more tests to make sure that your TTTBoard class is behaving
     # properly.
     brd = TTTBoard()
+    print(brd.board)
     brd.make_move("X", 8)
     brd.make_move("O", 7)
 
