@@ -10,7 +10,7 @@ class TTTBoard():
             represent moves by player 'O' and '*'s are spots no one has yet played on
     """
 
-    def __innit__(self):
+    def __init__(self):
         self.board = ["*"] * 9
 
     def __str__(self) -> str:
@@ -28,7 +28,68 @@ class TTTBoard():
         self.board[pos] = player
         return True
     
-    
+    def has_won(self, player) -> bool:
+        """Check if the given player has won"""
+        ps = [player] * 3 # 3 x or 3 o
+        if self.board[0:3] == ps or self.board[3:6] == ps or self.board[6:9] == ps:
+            return True # Horizontal
+        elif self.board[::3] == ps or self.board[1::3] == ps or self.board[2::3] == ps:
+            return True # Vertical
+        elif self.board[::4] == ps or self.board[2:7:2] == ps:
+            return True
+        else:
+            return False
+        # if self.board[0] == 'X' and self.board[1] == 'X' and self.board[2] == 'X':
+        #     return True
+        # elif self.board[3] == 'X' and self.board[4] == 'X' and self.board[5] == 'X':
+        #     return True
+        # elif self.board[6] == 'X' and self.board[7] == 'X' and self.board[8] == 'X':
+        #     return True
+        # elif self.board[2] == 'X' and self.board[5] == 'X' and self.board[8] == 'X':
+        #     return True
+        # elif self.board[0] == 'X' and self.board[3] == 'X' and self.board[6] == 'X':
+        #     return True
+        # elif self.board[1] == 'X' and self.board[4] == 'X' and self.board[7] == 'X':
+        #     return True
+        # elif self.board[2] == 'X' and self.board[4] == 'X' and self.board[6] == 'X':
+        #     return True
+        # elif self.board[0] == 'X' and self.board[4] == 'X' and self.board[8] == 'X':
+        #     return True
+        # elif self.board[0] == 'O' and self.board[1] == 'O' and self.board[2] == 'O':
+        #     return True
+        # elif self.board[3] == 'O' and self.board[4] == 'O' and self.board[5] == 'O':
+        #     return True
+        # elif self.board[6] == 'O' and self.board[7] == 'O' and self.board[8] == 'O':
+        #     return True
+        # elif self.board[2] == 'O' and self.board[5] == 'O' and self.board[8] == 'O':
+        #     return True
+        # elif self.board[0] == 'O' and self.board[3] == 'O' and self.board[6] == 'O':
+        #     return True
+        # elif self.board[1] == 'O' and self.board[4] == 'O' and self.board[7] == 'O':
+        #     return True
+        # elif self.board[2] == 'O' and self.board[4] == 'O' and self.board[6] == 'O':
+        #     return True
+        # elif self.board[0] == 'O' and self.board[4] == 'O' and self.board[8] == 'O':
+        #     return True
+        # else:
+        #     return False
+        
+    def game_over(self) -> bool:
+        if '*' not in self.board or self.has_won("X") or self.has_won("O"):
+            return True
+        else:
+            return False
+
+        for x in [0, 3, 6]:
+            if self.board[x+0] == '*' or self.board[x+1] == '*' or self.board[x+2] == '*':
+                return False
+            elif brd.has_won('X') == True or brd.has_won('O') == True:
+                return True
+            else:
+                return True
+    def clear(self):
+        self.board = ['*'] * 9 
+
 def play_tic_tac_toe() -> None:
     """Uses your class to play TicTacToe"""
 
@@ -48,7 +109,6 @@ def play_tic_tac_toe() -> None:
             return False
 
     brd = TTTBoard()
-    # print(brd.board)
     players = ["X", "O"]
     turn = 0
 
@@ -78,16 +138,16 @@ if __name__ == "__main__":
     # need to write some more tests to make sure that your TTTBoard class is behaving
     # properly.
     brd = TTTBoard()
-    print(brd.board)
     brd.make_move("X", 8)
     brd.make_move("O", 7)
+    print(brd)
 
     assert brd.game_over() == False
 
     brd.make_move("X", 5)
     brd.make_move("O", 6)
     brd.make_move("X", 2)
-
+    print(brd)
     assert brd.has_won("X") == True
     assert brd.has_won("O") == False
     assert brd.game_over() == True
@@ -107,4 +167,4 @@ if __name__ == "__main__":
     print("All tests passed!")
 
     # uncomment to play!
-    # play_tic_tac_toe()
+    play_tic_tac_toe()
